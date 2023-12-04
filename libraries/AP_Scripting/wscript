@@ -8,7 +8,7 @@ from waflib.TaskGen import after_method, before_method, feature
 import os
 
 # these are only used for binding generation, not compilation of the library
-BINDING_CFLAGS="-std=c99 -Wno-error=missing-field-initializers -Wall -Werror -Wextra"
+BINDING_CFLAGS="-std=c99 -Wno-maybe-uninitialized -Wno-error=missing-field-initializers -Wall -Werror -Wextra"
 BINDING_CC="gcc"
 
 def configure(cfg):
