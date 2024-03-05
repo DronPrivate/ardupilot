@@ -1,0 +1,5 @@
+echo "Also don't forget"
+echo "git submodule init"
+echo "git submodule update"
+./waf configure
+./waf build --target bin/arducopter
