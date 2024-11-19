@@ -21,6 +21,7 @@ pkgs.stdenv.mkDerivation {
   name = "ArduPilot-shell";
   buildInputs = with pkgs; [
 
+    gcc-arm-embedded
     mavproxy
 
     (python3.withPackages
@@ -44,6 +45,10 @@ pkgs.stdenv.mkDerivation {
   shellHook = ''
     echo ""
     echo "ArduPilot shell"
+    unset CC
+    unset CXX
+    unset NM
+    unset OBJCOPY
   '';
 
 }
