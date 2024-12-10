@@ -177,7 +177,7 @@ void AP_Proximity_LD06::parse_response_data()
                 continue;
             }
 
-            sampled_count ++;
+            sampled_counts ++;
             distance_avg += distance_meas;
         }
     }
