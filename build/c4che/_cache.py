@@ -1,6 +1,6 @@
 AUTOCONFIG = True
 BINDIR = '/usr/bin'
-BOARD = 'Pix32v5'
+BOARD = 'Pixhawk6C'
 COVERAGE = False
 DEBUG = False
 DEBUG_SYMBOLS = False
