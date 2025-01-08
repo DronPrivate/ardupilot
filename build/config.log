@@ -1,4 +1,4 @@
-# project  configured on Mon Jan  6 11:42:41 2025 by
+# project  configured on Wed Jan  8 11:05:46 2025 by
 # waf 2.0.27 (abi 20, python 30b08f0 on linux)
 # using /home/malina01/ardupilot/modules/waf/waf-light configure --board Pixhawk6C
 #
@@ -1178,7 +1178,7 @@ from /home/malina01/ardupilot: Test does not build: Traceback (most recent call 
     raise Errors.BuildError(self.producer.error)
 waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 140671016358912: cxx test.cpp -> test.cpp.1.o}
+	{task 139916215563920: cxx test.cpp -> test.cpp.1.o}
  (run with -v to display more information)
 
 not found
@@ -1209,7 +1209,7 @@ from /home/malina01/ardupilot: Test does not build: Traceback (most recent call 
     raise Errors.BuildError(self.producer.error)
 waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 140671005804368: cxx test.cpp -> test.cpp.1.o}
+	{task 139916204992992: cxx test.cpp -> test.cpp.1.o}
  (run with -v to display more information)
 
 not found
@@ -1241,7 +1241,7 @@ from /home/malina01/ardupilot: Test does not build: Traceback (most recent call 
     raise Errors.BuildError(self.producer.error)
 waflib.Errors.BuildError: Build failed
  -> task in 'testprog' failed (exit status 1): 
-	{task 140671005806160: cxx test.cpp -> test.cpp.1.o}
+	{task 139916204994784: cxx test.cpp -> test.cpp.1.o}
  (run with -v to display more information)
 
 no
