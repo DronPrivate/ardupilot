@@ -164,12 +164,15 @@ void AP_Proximity_LD06::parse_response_data()
     const float push_angle = correct_angle_for_orientation(uncorrected_angle);
 
     float distance_avg = 0.0;
+    float distance_min = MAX_READ_DISTANCE_LD06;
 
     // Each recording point is three bytes long, goes through all of that and updates database
     for (uint16_t i = START_PAYLOAD; i < START_PAYLOAD + MEASUREMENT_PAYLOAD_LENGTH * PAYLOAD_COUNT; i += MEASUREMENT_PAYLOAD_LENGTH) {
 
         // Gets the distance recorded and converts to meters
         const float distance_meas = UINT16_VALUE(_response[i + 1], _response[i]) * 0.001;
+        // Gets the intensity of the measurement in range <0;1>
+        const float intensity_meas = _response[i+2] * (float)(1/255);
 
         // Validates data and checks if it should be included
         if (distance_meas > distance_min() && distance_meas < distance_max()) {
@@ -177,8 +180,18 @@ void AP_Proximity_LD06::parse_response_data()
                 continue;
             }
 
+            // Prepare data for counting average value
             sampled_counts ++;
             distance_avg += distance_meas;
+            // Computing the minimum value of the distance
+            if(distance_meas<distance_min)
+            {
+                // Check if measured data is valid and note the minimum value
+                if(intensity_meas>0.1)
+                {
+                    distance_min=distance_meas;
+                }
+            }
         }
     }
 
@@ -188,11 +201,20 @@ void AP_Proximity_LD06::parse_response_data()
     if (sampled_counts > 2) {
         // Gets the average distance read
         distance_avg /= sampled_counts;
+        if(distance_avg<distance_min) distance_min=distance_avg;
 
         // Pushes the average distance and angle to the obstacle avoidance database
         const AP_Proximity_Boundary_3D::Face face = frontend.boundary.get_face(push_angle);
-        _temp_boundary.add_distance(face, push_angle, distance_avg);
-        database_push(push_angle, distance_avg);
+
+        #ifdef PACKET_MINIMAL_DIST_LD06
+         _temp_boundary.add_distance(face, push_angle, distance_min);
+         database_push(push_angle, distance_min);
+        #endif
+
+        #ifdef PACKET_AVERAGE_DIST _LD06
+         _temp_boundary.add_distance(face, push_angle, distance_avg);
+         database_push(push_angle, distance_avg);
+        #endif
     }
 }
 #endif // AP_PROXIMITY_LD06_ENABLED

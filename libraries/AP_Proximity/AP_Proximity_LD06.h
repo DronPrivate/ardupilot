@@ -36,6 +36,10 @@
 #define MAX_READ_DISTANCE_LD06          12.0f
 #define MIN_READ_DISTANCE_LD06           0.02f
 
+// Switching between packet average OR packet minimum value
+// #define PACKET_AVERAGE_DIST_LD06
+#define PACKET_MINIMAL_DIST_LD06
+
 class AP_Proximity_LD06 : public AP_Proximity_Backend_Serial
 {
 public:
