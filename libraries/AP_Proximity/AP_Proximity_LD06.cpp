@@ -211,7 +211,7 @@ void AP_Proximity_LD06::parse_response_data()
          database_push(push_angle, distance_min);
         #endif
 
-        #ifdef PACKET_AVERAGE_DIST _LD06
+        #ifdef PACKET_AVERAGE_DIST_LD06
          _temp_boundary.add_distance(face, push_angle, distance_avg);
          database_push(push_angle, distance_avg);
         #endif
