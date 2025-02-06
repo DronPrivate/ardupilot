@@ -163,8 +163,8 @@ void AP_Proximity_LD06::parse_response_data()
     // Takes the angle in the middle of the readings to be pushed to the database
     const float push_angle = correct_angle_for_orientation(uncorrected_angle);
 
-    float distance_avg = 0.0;
-    float distance_min = MAX_READ_DISTANCE_LD06;
+    float distance_val_avg = 0.0;
+    float distance_val_min = MAX_READ_DISTANCE_LD06;
 
     // Each recording point is three bytes long, goes through all of that and updates database
     for (uint16_t i = START_PAYLOAD; i < START_PAYLOAD + MEASUREMENT_PAYLOAD_LENGTH * PAYLOAD_COUNT; i += MEASUREMENT_PAYLOAD_LENGTH) {
@@ -182,14 +182,14 @@ void AP_Proximity_LD06::parse_response_data()
 
             // Prepare data for counting average value
             sampled_counts ++;
-            distance_avg += distance_meas;
+            distance_val_avg += distance_meas;
             // Computing the minimum value of the distance
-            if(distance_meas<distance_min)
+            if(distance_meas<distance_val_min)
             {
                 // Check if measured data is valid and note the minimum value
                 if(intensity_meas>0.1)
                 {
-                    distance_min=distance_meas;
+                    distance_val_min=distance_meas;
                 }
             }
         }
@@ -200,20 +200,20 @@ void AP_Proximity_LD06::parse_response_data()
     //    (likely outliers) recorded in the range
     if (sampled_counts > 2) {
         // Gets the average distance read
-        distance_avg /= sampled_counts;
-        if(distance_avg<distance_min) distance_min=distance_avg;
+        distance_val_avg /= sampled_counts;
+        if(distance_val_avg<distance_val_min) distance_val_min=distance_val_avg;
 
         // Pushes the average distance and angle to the obstacle avoidance database
         const AP_Proximity_Boundary_3D::Face face = frontend.boundary.get_face(push_angle);
 
         #ifdef PACKET_MINIMAL_DIST_LD06
-         _temp_boundary.add_distance(face, push_angle, distance_min);
-         database_push(push_angle, distance_min);
+         _temp_boundary.add_distance(face, push_angle, distance_val_min);
+         database_push(push_angle, distance_val_min);
         #endif
 
         #ifdef PACKET_AVERAGE_DIST_LD06
-         _temp_boundary.add_distance(face, push_angle, distance_avg);
-         database_push(push_angle, distance_avg);
+         _temp_boundary.add_distance(face, push_angle, distance_val_avg);
+         database_push(push_angle, distance_val_avg);
         #endif
     }
 }
