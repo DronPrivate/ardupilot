@@ -6,7 +6,7 @@
 #error ap_version.h should never be included directly. You probably want to include AP_Common/AP_FWVersion.h
 #endif
 
-#define GIT_VERSION "4810f693"
-#define GIT_VERSION_INT 1209071251
+#define GIT_VERSION "b0f367c2"
+#define GIT_VERSION_INT 2968741826
 #define AP_BUILD_ROOT "/home/malina01/ardupilot"
 #define CHIBIOS_GIT_VERSION "88b84600"
